@@ -19,7 +19,7 @@ export default function MyListingsTab({ userName, accessToken }: MyListingsTabPr
     [userName, accessToken]
   );
 
-  const { data: listings, isLoading } = useApi(getListingsApiCall);
+  const { data: listings, isLoading, refetch } = useApi(getListingsApiCall);
 
   const filteredListings = useMemo(() => {
     if (!listings) return [];
@@ -49,7 +49,7 @@ export default function MyListingsTab({ userName, accessToken }: MyListingsTabPr
       ) : (
         <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2}>
           {filteredListings.map((listing, index) => (
-            <ManagedListingCard listing={listing} index={index} key={listing.id} />
+            <ManagedListingCard listing={listing} index={index} key={listing.id} onDeleteSuccess={refetch} />
           ))}
         </Masonry>
       )}
