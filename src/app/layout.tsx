@@ -23,7 +23,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "Midnight - Auction House",
+  title: "Homepage - Midnight Auction House",
   description: "Modern auction house platform for collectors",
   icons: {
     icon: "/favicon.png",
