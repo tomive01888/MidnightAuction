@@ -170,39 +170,46 @@ export default function Header() {
   );
 
   return (
-    <Box>
+    <>
       <AppBar position="sticky">
-        <Container maxWidth="xl">
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Logo />
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            px: 2,
+            width: "100%",
+            maxWidth: "1200px",
+            mx: "auto",
+          }}
+        >
+          <Logo />
 
-            <Box component="nav" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <IconButton color="inherit" aria-label="open search" onClick={handleSearchToggle} sx={{ mr: 1 }}>
-                <Search />
-              </IconButton>
-              {isAuthLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : isMobile ? (
-                <MobileNav />
-              ) : userProfile ? (
-                <DesktopNav />
-              ) : (
-                <>
-                  <Link href="/login">
-                    <Button variant="outlined" color="primary">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link href="/register">
-                    <Button variant="contained" color="secondary">
-                      Register
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
+          <Box component="nav" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <IconButton color="inherit" aria-label="open search" onClick={handleSearchToggle} sx={{ mr: 1 }}>
+              <Search />
+            </IconButton>
+            {isAuthLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : isMobile ? (
+              <MobileNav />
+            ) : userProfile ? (
+              <DesktopNav />
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="outlined" color="primary">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="contained" color="secondary">
+                    Register
+                  </Button>
+                </Link>
+              </>
+            )}
+          </Box>
+        </Toolbar>
       </AppBar>
 
       <Drawer
@@ -265,6 +272,6 @@ export default function Header() {
       </Drawer>
 
       <SearchOverlay isOpen={isSearchOpen} onClose={handleSearchToggle} />
-    </Box>
+    </>
   );
 }

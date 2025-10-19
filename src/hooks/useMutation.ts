@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import toast from "react-hot-toast";
-
 import { ApiError } from "@/lib/types";
+
 function isApiError(error: unknown): error is ApiError {
   if (typeof error !== "object" || error === null) return false;
   const potentialApiError = error as ApiError;
