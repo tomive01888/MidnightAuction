@@ -78,7 +78,6 @@ export default function ProfilePage() {
               {profileData.bio || "This user prefers to be mysterious."}
             </Typography>
 
-            {/* --- THE NEW, THEMATIC CREDITS DISPLAY --- */}
             <Paper
               elevation={4}
               sx={{
@@ -95,8 +94,9 @@ export default function ProfilePage() {
             >
               <AccountBalanceWallet sx={{ fontSize: 40, color: "primary.main", mb: 1 }} />
               <Typography
+                aria-label={`Credits: ${profileData.credits}`}
                 variant="h2"
-                component="p"
+                component="h2"
                 sx={{
                   fontFamily: "var(--font-orbitron)",
                   color: "primary.main",

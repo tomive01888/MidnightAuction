@@ -44,14 +44,13 @@ const StatSegment = ({
 };
 
 const LegendItem = ({ color, name, value }: { color: string; name: string; value: number }) => (
-  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-    <Box sx={{ width: 15, height: 15, borderRadius: "50%", backgroundColor: color }} />
+  <Box component="li" sx={{ display: "flex", alignItems: "center", gap: 1, listStyle: "none" }}>
+    <Box sx={{ width: 15, height: 15, borderRadius: "50%", backgroundColor: color }} aria-hidden="true" />
     <Typography variant="body2" sx={{ color: "text.secondary" }}>
       {name}: <strong style={{ color: useTheme().palette.text.primary }}>{value}</strong>
     </Typography>
   </Box>
 );
-
 export default function ProfileStatsChart({
   listingsCount,
   bidsCount,
@@ -70,8 +69,12 @@ export default function ProfileStatsChart({
 
   return (
     <Box>
-      <Box sx={{ position: "relative", width: size, height: size, margin: "0 auto", mb: 3 }}>
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <Box
+        sx={{ position: "relative", width: size, height: size, margin: "0 auto", mb: 3 }}
+        role="img"
+        aria-label={`Profile statistics chart showing ${total} total actions: ${listingsCount} listings, ${bidsCount} bids, and ${winsCount} wins`}
+      >
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
           {/* Background Circle */}
           <circle
             cx={size / 2}
@@ -114,6 +117,7 @@ export default function ProfileStatsChart({
             alignItems: "center",
             justifyContent: "center",
           }}
+          aria-hidden="true"
         >
           <Typography variant="h3" sx={{ fontFamily: "var(--font-orbitron)" }}>
             {total}
@@ -121,7 +125,13 @@ export default function ProfileStatsChart({
           <Typography sx={{ color: "text.secondary", mt: -1 }}>Total Actions</Typography>
         </Box>
       </Box>
-      <Stack direction="row" sx={{ justifyContent: "space-evenly" }}>
+      <Stack
+        direction="row"
+        sx={{ justifyContent: "space-evenly" }}
+        component="ul"
+        aria-label="Statistics breakdown"
+        role="list"
+      >
         <LegendItem color={theme.palette.primary.main} name="Listings" value={listingsCount} />
         <LegendItem color={theme.palette.secondary.main} name="Bids" value={bidsCount} />
         <LegendItem color={theme.palette.warning.main} name="Wins" value={winsCount} />

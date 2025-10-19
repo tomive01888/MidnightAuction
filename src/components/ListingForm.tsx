@@ -70,7 +70,6 @@ export default function ListingForm({
 
   const addMediaField = () => {
     if (media.length < 4) {
-      // Enforce max 4 images
       setMedia([...media, { url: "", alt: "" }]);
     }
   };
@@ -110,8 +109,8 @@ export default function ListingForm({
   };
 
   return (
-    <Paper component="form" onSubmit={handleSubmit} sx={{ p: 4, borderRadius: 4 }}>
-      <Typography variant="h4" component="h1" sx={{ fontFamily: "var(--font-orbitron)", mb: 3 }}>
+    <Paper component="form" onSubmit={handleSubmit} sx={{ p: 4, borderRadius: 4 }} aria-labelledby="form-title">
+      <Typography id="form-title" variant="h4" component="h1" sx={{ fontFamily: "var(--font-orbitron)", mb: 3 }}>
         {initialData.id ? "Edit Listing" : "Create a New Listing"}
       </Typography>
 
@@ -122,8 +121,11 @@ export default function ListingForm({
         required
         fullWidth
         margin="normal"
+        aria-required="true"
       />
+
       <TextField
+        aria-label="Description"
         label="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -131,7 +133,9 @@ export default function ListingForm({
         multiline
         rows={4}
         margin="normal"
+        id="description-field"
       />
+
       <TextField
         label="Tags (comma-separated)"
         value={tags}
@@ -140,34 +144,59 @@ export default function ListingForm({
         margin="normal"
         helperText="e.g., art, collectible, rare"
       />
-      <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
+
+      <Typography component="h2" variant="h6" sx={{ mt: 2, mb: 1 }} id="images-section-label">
         Images (max 4)
       </Typography>
-      {media.map((item, index) => (
-        <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-          <TextField
-            label={`Image URL ${index + 1}`}
-            value={item.url}
-            onChange={(e) => handleMediaChange(index, e.target.value)}
-            fullWidth
-            required={index === 0}
-          />
-          {media.length > 1 && (
-            <IconButton onClick={() => removeMediaField(index)} aria-label={`Remove image ${index + 1}`}>
-              <RemoveCircleOutline />
-            </IconButton>
-          )}
-        </Box>
-      ))}
-      <Button startIcon={<AddCircleOutline />} onClick={addMediaField} disabled={media.length >= 4}>
+
+      <Box role="group" aria-labelledby="images-section-label" sx={{ mb: 2 }}>
+        {media.map((item, index) => (
+          <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+            <TextField
+              label={`Image URL ${index + 1}`}
+              value={item.url}
+              onChange={(e) => handleMediaChange(index, e.target.value)}
+              fullWidth
+              required={index === 0}
+            />
+            {media.length > 1 && (
+              <IconButton
+                onClick={() => removeMediaField(index)}
+                aria-label={`Remove image URL ${index + 1}`}
+                type="button"
+              >
+                <RemoveCircleOutline />
+              </IconButton>
+            )}
+          </Box>
+        ))}
+      </Box>
+
+      <Button
+        startIcon={<AddCircleOutline />}
+        onClick={addMediaField}
+        disabled={media.length >= 4}
+        aria-label={`Add another image URL. ${media.length} of 4 images added.`}
+        type="button"
+      >
         Add Another Image
       </Button>
 
-      {/* Only show the duration dropdown for new listings */}
       {!initialData.id && (
         <FormControl fullWidth margin="normal">
-          <InputLabel>Auction Duration</InputLabel>
-          <Select value={duration} label="Auction Duration" onChange={(e) => setDuration(e.target.value as number)}>
+          <InputLabel id="duration-select-label" htmlFor="duration-select">
+            Auction Duration
+          </InputLabel>
+          <Select
+            value={duration}
+            label="Auction Duration"
+            onChange={(e) => setDuration(e.target.value as number)}
+            labelId="duration-select-label"
+            id="duration-select"
+            inputProps={{
+              id: "duration-select",
+            }}
+          >
             {durationOptions.map((opt) => (
               <MenuItem key={opt.value} value={opt.value}>
                 {opt.label}
@@ -178,8 +207,15 @@ export default function ListingForm({
       )}
 
       <Box sx={{ mt: 3 }}>
-        <Button type="submit" variant="contained" size="large" fullWidth disabled={isLoading}>
-          {isLoading ? <CircularProgress size={24} color="inherit" /> : submitButtonText}
+        <Button type="submit" variant="contained" size="large" fullWidth disabled={isLoading} aria-busy={isLoading}>
+          {isLoading ? (
+            <>
+              <CircularProgress size={24} color="inherit" aria-hidden="true" />
+              <span style={{ marginLeft: 8 }}>Submitting...</span>
+            </>
+          ) : (
+            submitButtonText
+          )}
         </Button>
       </Box>
     </Paper>

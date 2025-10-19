@@ -71,7 +71,7 @@ export default function Footer() {
         >
           {/* Left Section: Built With */}
           <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
-            <Typography variant="h6" sx={{ fontFamily: "var(--font-orbitron)", mb: 1 }}>
+            <Typography component={"p"} variant="h6" sx={{ fontFamily: "var(--font-orbitron)", mb: 1 }}>
               Built with
             </Typography>
             <Box

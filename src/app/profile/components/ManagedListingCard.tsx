@@ -86,6 +86,7 @@ export default function ManagedListingCard({ listing, index, onDeleteSuccess }: 
               </Typography>
               <Box>
                 <IconButton
+                  aria-label={`Edit ${listing.title}`}
                   onClick={handleEdit}
                   color="primary"
                   size="small"
@@ -94,6 +95,7 @@ export default function ManagedListingCard({ listing, index, onDeleteSuccess }: 
                   <Edit />
                 </IconButton>
                 <IconButton
+                  aria-label={`Delete ${listing.title}`}
                   onClick={openDeleteDialog}
                   color="error"
                   size="small"
