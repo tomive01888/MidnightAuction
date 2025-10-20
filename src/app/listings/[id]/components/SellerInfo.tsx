@@ -102,6 +102,8 @@ export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
               listingsCount={sellerStats!.data.listingsCount}
               bidsCount={sellerStats!.data.bidsCount}
               winsCount={sellerStats!.data.winsCount}
+              size={180}
+              strokeWidth={12}
             />
           </Box>
         )}
