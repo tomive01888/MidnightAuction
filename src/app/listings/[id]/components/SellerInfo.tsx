@@ -94,17 +94,18 @@ export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
           <Typography color="error" sx={{ p: 2 }}>
             Could not load stats.
           </Typography>
-        ) : (
+        ) : sellerStats ? (
           <Box sx={{ p: 2, backgroundColor: "background.default", borderRadius: 2 }}>
             <ProfileStatsChart
-              listingsCount={sellerStats!.data.listingsCount}
-              bidsCount={sellerStats!.data.bidsCount}
-              winsCount={sellerStats!.data.winsCount}
+              listingsCount={sellerStats.data.listingsCount}
+              bidsCount={sellerStats.data.bidsCount}
+              winsCount={sellerStats.data.winsCount}
               size={180}
               strokeWidth={12}
             />
           </Box>
-        )}
+        ) : null}{" "}
+        {/* Render nothing if none of the above conditions are met */}
       </Collapse>
     </Box>
   );
