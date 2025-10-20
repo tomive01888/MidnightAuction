@@ -44,11 +44,12 @@ import SearchResultCard from "./SearchResultCard";
 
 function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query, 300);
+  const debouncedQuery = useDebounce(query, 420);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      setQuery("");
     }
 
     return () => {
@@ -77,7 +78,10 @@ function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       component="section"
       sx={{
         position: "fixed",
-        inset: 0,
+        left: 0,
+        top: 65,
+        width: "100vw",
+        height: "95vh",
         zIndex: 2000,
         backgroundColor: "rgba(13, 12, 29, 0.95)",
         backdropFilter: "blur(10px)",
@@ -92,7 +96,7 @@ function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             autoFocus
             placeholder="Search listings..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value.trimStart())}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -111,7 +115,13 @@ function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               <CircularProgress />
             </Box>
           )}
-          {!isLoading && Array.isArray(results) && results.length > 0 && (
+          {!isLoading && query === "" && (
+            <Typography align="center" sx={{ p: 4 }}>
+              Type to start searching
+            </Typography>
+          )}
+
+          {!isLoading && activeResults.length > 0 && (
             <List component="ul" aria-label="Search results">
               {activeResults.map((listing) => (
                 <ListItem key={listing.id} disablePadding sx={{ width: "100%" }}>
@@ -120,7 +130,8 @@ function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               ))}
             </List>
           )}
-          {!isLoading && debouncedQuery && Array.isArray(results) && results.length === 0 && (
+
+          {!isLoading && query !== "" && activeResults.length === 0 && (
             <Typography align="center" sx={{ p: 4 }}>
               No results found.
             </Typography>

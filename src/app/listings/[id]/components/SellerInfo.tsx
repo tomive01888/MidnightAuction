@@ -1,24 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import {
-  CardHeader,
-  Avatar,
-  Typography,
-  Box,
-  IconButton,
-  useTheme,
-  Collapse,
-  CircularProgress,
-  Alert,
-} from "@mui/material";
-import { AccountCircle, ExpandMore as ExpandMoreIcon, Lock } from "@mui/icons-material";
+import { CardHeader, Typography, Box, IconButton, useTheme, Collapse, CircularProgress, Alert } from "@mui/material";
+import { ExpandMore as ExpandMoreIcon, Lock } from "@mui/icons-material";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { UserProfile } from "@/lib/types";
 import { getFullProfileStats } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import ProfileStatsChart from "@/app/profile/components/ProfileStatsChart";
+import SmartAvatar from "@/components/SmartAvatar";
 interface SellerInfoProps {
   seller?: UserProfile;
   createdDate: string;
@@ -48,11 +39,7 @@ export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
   return (
     <Box>
       <CardHeader
-        avatar={
-          <Avatar src={seller?.avatar?.url || undefined}>
-            <AccountCircle />
-          </Avatar>
-        }
+        avatar={<SmartAvatar src={seller?.avatar?.url || undefined} alt={seller?.name || "Seller"} />}
         action={
           seller?.name ? (
             <IconButton

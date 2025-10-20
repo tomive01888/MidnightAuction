@@ -11,7 +11,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
   useTheme,
   useMediaQuery,

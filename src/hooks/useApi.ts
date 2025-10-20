@@ -33,6 +33,7 @@ export function useApi<T>(apiCall: () => Promise<{ data: T }>) {
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
+      setData([] as T);
       const response = await apiCall();
       setData(response.data);
       setError(null);
