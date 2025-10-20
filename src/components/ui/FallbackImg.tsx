@@ -1,36 +1,25 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   fallbackSrc?: string;
   onImageReady?: () => void;
 };
 
-export function FallbackImg({ fallbackSrc = "/placeholder.png", onImageReady, src, ...rest }: Props) {
-  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+export function FallbackImg({ fallbackSrc = "/placeholder.png", onImageReady, onError, src, ...rest }: Props) {
+  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const imageElement = e.currentTarget;
 
-  useEffect(() => {
-    setImgSrc(src || fallbackSrc);
-  }, [src, fallbackSrc]);
+    if (imageElement.src !== fallbackSrc) {
+      imageElement.src = fallbackSrc;
+      imageElement.alt = "Fallback image";
+    }
 
-  const handleError = () => {
-    if (imgSrc !== fallbackSrc) {
-      setImgSrc(fallbackSrc);
+    if (onError) {
+      onError(e);
     }
   };
 
-  const handleLoad = () => {
-    onImageReady?.();
-  };
-
-  return (
-    <img
-      {...rest}
-      src={imgSrc}
-      onLoad={handleLoad}
-      onError={handleError}
-      loading="lazy"
-    />
-  );
+  return <img {...rest} src={src || fallbackSrc} onLoad={onImageReady} onError={handleError} loading="lazy" />;
 }

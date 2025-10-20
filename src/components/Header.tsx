@@ -171,9 +171,6 @@ export default function Header() {
 
   const MobileNav = () => (
     <>
-      <IconButton color="inherit" aria-label="open search" onClick={handleSearchToggle}>
-        <Search />
-      </IconButton>
       <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={handleDrawerToggle}>
         <MenuIcon />
       </IconButton>
