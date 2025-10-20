@@ -19,6 +19,7 @@ import {
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import { format } from "date-fns";
 import { Bid } from "@/lib/types";
+import SmartAvatar from "@/components/SmartAvatar";
 
 interface BidHistorySectionProps {
   bids: Bid[];
@@ -61,7 +62,7 @@ export default function BidHistorySection({ bids }: BidHistorySectionProps) {
               {sortedBids.map((bid) => (
                 <ListItem key={bid.id}>
                   <ListItemAvatar>
-                    <Avatar src={bid.bidder?.avatar?.url} />
+                    <SmartAvatar src={bid.bidder?.avatar?.url} alt={bid.bidder?.name} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={`${bid.bidder.name} bid ${bid.amount} credits`}

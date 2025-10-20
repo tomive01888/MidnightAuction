@@ -61,7 +61,7 @@ export interface FullUserProfileStats extends UserProfile {
  * @param name - The name of the profile to fetch.
  * @param token - The auth token.
  */
-export async function getFullProfileStats(name: string, token: string): Promise<ApiResponse<FullUserProfileStats>> {
+export async function getFullProfileStats(name: string, token?: string): Promise<ApiResponse<FullUserProfileStats>> {
   const api = new AuctionApi(token);
 
   const profilePromise = api.getProfile(name);

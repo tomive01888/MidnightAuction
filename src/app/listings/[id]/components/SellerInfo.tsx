@@ -1,12 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { CardHeader, Avatar, Typography, Box, IconButton, useTheme, Collapse } from "@mui/material";
-import { AccountCircle, ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
+import {
+  CardHeader,
+  Avatar,
+  Typography,
+  Box,
+  IconButton,
+  useTheme,
+  Collapse,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
+import { AccountCircle, ExpandMore as ExpandMoreIcon, Lock } from "@mui/icons-material";
 import { format } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
 import { UserProfile } from "@/lib/types";
-import { SellerStatsContent } from "./SellersStats";
-
+import { getFullProfileStats } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
+import ProfileStatsChart from "@/app/profile/components/ProfileStatsChart";
 interface SellerInfoProps {
   seller?: UserProfile;
   createdDate: string;
@@ -14,7 +26,20 @@ interface SellerInfoProps {
 
 export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
   const theme = useTheme();
+  const { accessToken } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    data: sellerStats,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["profileStats", seller?.name, !!accessToken],
+
+    queryFn: () => getFullProfileStats(seller!.name, accessToken!),
+
+    enabled: isOpen && !!accessToken,
+  });
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -56,9 +81,30 @@ export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
         }
       />
 
-      {/* The Collapse component now correctly wraps the content BELOW the header */}
+      {/* The Collapse component renders its children based on the 'isOpen' state. */}
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        {seller?.name && <SellerStatsContent sellerName={seller.name} />}
+        {/* We now render the correct content based on the auth state and query state. */}
+        {!accessToken ? (
+          <Alert severity="info" icon={<Lock fontSize="inherit" />} sx={{ m: 2 }}>
+            You must be logged in to view seller statistics.
+          </Alert>
+        ) : isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+            <CircularProgress />
+          </Box>
+        ) : isError ? (
+          <Typography color="error" sx={{ p: 2 }}>
+            Could not load stats.
+          </Typography>
+        ) : (
+          <Box sx={{ p: 2, backgroundColor: "background.default", borderRadius: 2 }}>
+            <ProfileStatsChart
+              listingsCount={sellerStats!.data.listingsCount}
+              bidsCount={sellerStats!.data.bidsCount}
+              winsCount={sellerStats!.data.winsCount}
+            />
+          </Box>
+        )}
       </Collapse>
     </Box>
   );

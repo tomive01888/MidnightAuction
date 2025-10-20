@@ -19,32 +19,29 @@ export function SellerStatsContent({ sellerName }: SellerStatsContentProps) {
     isError,
   } = useQuery({
     queryKey: ["profileStats", sellerName],
-    queryFn: () => getFullProfileStats(sellerName, accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => getFullProfileStats(sellerName, accessToken || undefined),
+    enabled: true,
   });
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
         <CircularProgress />
       </Box>
     );
-  if (isError)
+  }
+
+  if (isError) {
     return (
       <Typography color="error" sx={{ p: 2 }}>
         Could not load stats.
       </Typography>
     );
+  }
 
   return (
     <Box sx={{ p: 2, backgroundColor: "background.default", borderRadius: 2 }}>
-      <ProfileStatsChart
-        listingsCount={sellerStats!.data.listingsCount}
-        bidsCount={sellerStats!.data.bidsCount}
-        winsCount={sellerStats!.data.winsCount}
-        size={180}
-        strokeWidth={12}
-      />
+     
     </Box>
   );
 }

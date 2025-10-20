@@ -12,6 +12,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import ProfileStatsChart from "./components/ProfileStatsChart";
 import ProfileContentTabs from "./components/ProfileContentTabs";
 import EditProfile from "./components/EditProfileButton";
+import SmartAvatar from "@/components/SmartAvatar";
 
 export default function ProfilePage() {
   const { userProfile, accessToken, isLoading: isAuthLoading } = useAuth();
@@ -65,7 +66,7 @@ export default function ProfilePage() {
         >
           {/* --- LEFT COLUMN: USER INFO & CREDITS --- */}
           <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Avatar
+            <SmartAvatar
               src={profileData.avatar?.url}
               alt={profileData.name}
               sx={{ width: 220, height: 220, mb: 2, border: "4px solid", borderColor: "primary.main" }}
