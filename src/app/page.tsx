@@ -63,7 +63,6 @@ export default function Home() {
 
   return (
     <>
-      {/* --- CINEMATIC HERO SECTION --- */}
       <Box
         component={"section"}
         sx={{
@@ -145,7 +144,6 @@ export default function Home() {
         </Container>
       </Box>
 
-      {/* --- LISTINGS GRID SECTION --- */}
       <Container component={"section"} maxWidth="lg" sx={{ py: 6, scrollMarginTop: "50px" }} id="listings-grid">
         <Box
           component={"header"}

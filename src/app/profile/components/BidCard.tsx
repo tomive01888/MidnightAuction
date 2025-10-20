@@ -15,10 +15,6 @@ interface BidCardProps {
 
 type Status = "idle" | "loading" | "leading" | "outbid";
 
-/**
- * A wrapper component that displays a listing card for a bid
- * and adds an overlay showing the user's specific bid amount.
- */
 export default function BidCard({ bid, index }: BidCardProps) {
   const { userProfile } = useAuth();
   const listing = bid.listing!;
@@ -82,10 +78,8 @@ export default function BidCard({ bid, index }: BidCardProps) {
 
   return (
     <Box component={"article"} sx={{ position: "relative" }}>
-      {/* Render the standard listing card for the bid's associated listing */}
       <ListingCard listing={listing} index={index} />
 
-      {/* Add our new, prominent overlay */}
       <Chip
         icon={<AttachMoney />}
         label={`Your Bid: ${bid.amount}`}
@@ -101,7 +95,6 @@ export default function BidCard({ bid, index }: BidCardProps) {
         }}
       />
 
-      {/* NEW: On-Demand Status Check Overlay */}
       <Box
         sx={{
           position: "absolute",

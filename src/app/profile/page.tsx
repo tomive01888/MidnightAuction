@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Container, Box, Typography, Avatar, CircularProgress, Alert, Divider, Paper } from "@mui/material";
+import { Container, Box, Typography, CircularProgress, Alert, Divider, Paper } from "@mui/material";
 import { AccountBalanceWallet } from "@mui/icons-material";
 import { useAuth } from "@/contexts/AuthContext";
 import { getFullProfileStats } from "@/lib/api";

@@ -1,10 +1,10 @@
 import { FallbackImg } from "@/components/ui/FallbackImg";
-import { Media } from "@/lib/types"; // Assuming you have this type
+import { Media } from "@/lib/types";
 import { ImageListItem, useTheme } from "@mui/material";
 import React from "react";
 
 interface GalleryThumbnailProps {
-  item: Media; // or { url: string; alt?: string } if no Media type exists
+  item: Media;
   listingTitle: string;
   index: number;
   isSelected: boolean;

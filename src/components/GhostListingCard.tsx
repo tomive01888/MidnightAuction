@@ -31,11 +31,6 @@ const StyledRect = styled("rect")(({ theme }) => ({
   rx: 8,
 }));
 
-/**
- * A themed, animated skeleton loading card with a consistent aspect ratio
- * to prevent Cumulative Layout Shift. Designed to be used as a placeholder
- * for the MasonryListingCard.
- */
 export default function GhostListingCard() {
   const theme = useTheme();
 
@@ -70,7 +65,6 @@ export default function GhostListingCard() {
         <line x1="10%" y1="90%" x2="40%" y2="90%" stroke={theme.palette.primary.main} strokeWidth="2" />
       </svg>
 
-      {/* Centered loading spinner with purple glow */}
       <Box
         sx={{
           position: "absolute",

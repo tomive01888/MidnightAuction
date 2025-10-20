@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useMemo, useCallback } from "react";
 import { Box, CircularProgress, Typography, Switch, FormControlLabel } from "@mui/material";
 import { Masonry } from "@mui/lab";

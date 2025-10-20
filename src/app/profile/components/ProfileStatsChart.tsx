@@ -75,7 +75,6 @@ export default function ProfileStatsChart({
         aria-label={`Profile statistics chart showing ${total} total actions: ${listingsCount} listings, ${bidsCount} bids, and ${winsCount} wins`}
       >
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-          {/* Background Circle */}
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -84,8 +83,6 @@ export default function ProfileStatsChart({
             stroke={theme.palette.background.paper}
             strokeWidth={strokeWidth}
           />
-
-          {/* Data Segments */}
           <StatSegment
             radius={radius}
             strokeWidth={strokeWidth}

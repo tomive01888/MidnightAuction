@@ -1,5 +1,3 @@
-// /app/register/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -31,7 +29,6 @@ export default function RegisterPage() {
     setError(null);
     setIsLoading(true);
 
-    // Basic validation for Noroff API username
     if (!/^[a-zA-Z0-9_]+$/.test(formData.name)) {
       setError("Username can only contain letters, numbers, and underscores.");
       setIsLoading(false);
@@ -44,7 +41,7 @@ export default function RegisterPage() {
       login(accessToken, profile);
 
       toast.success(`Welcome, ${profile.name}! Your account has been created.`);
-      router.push("/"); // Redirect to homepage after registration
+      router.push("/");
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError.errors[0]?.message || "An unknown error occurred.");

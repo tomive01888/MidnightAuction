@@ -81,9 +81,7 @@ export default function SellerInfo({ seller, createdDate }: SellerInfoProps) {
         }
       />
 
-      {/* The Collapse component renders its children based on the 'isOpen' state. */}
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        {/* We now render the correct content based on the auth state and query state. */}
         {!accessToken ? (
           <Alert severity="info" icon={<Lock fontSize="inherit" />} sx={{ m: 2 }}>
             You must be logged in to view seller statistics.

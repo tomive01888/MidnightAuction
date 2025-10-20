@@ -30,7 +30,7 @@ export function FallbackImg({ fallbackSrc = "/placeholder.png", onImageReady, sr
       src={imgSrc}
       onLoad={handleLoad}
       onError={handleError}
-      loading="lazy" // Add lazy loading
+      loading="lazy"
     />
   );
 }
