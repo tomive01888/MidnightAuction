@@ -23,7 +23,7 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
     : "Invalid date";
   const bidCount = listing._count?.bids;
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "relative", borderRadius: 4 }}>
       <Box
         sx={{
           opacity: imageLoaded ? 0 : 1,
@@ -46,9 +46,17 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
           transition: "opacity 0.6s ease-in-out",
           transitionDelay: imageLoaded ? `${index * 100}ms` : "0ms",
           pointerEvents: imageLoaded ? "auto" : "none",
+          borderRadius: 4,
+          "&:hover": {
+            border: "1px solid #f6b3ffff",
+            boxShadow: "0 0 12px #FF00E1",
+          },
         }}
       >
-        <Link href={`/listings/${listing.id}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
+        <Link
+          href={`/listings/${listing.id}`}
+          style={{ textDecoration: "none", display: "block", height: "100%", borderRadius: 4 }}
+        >
           <Box
             sx={{
               height: "100%",
@@ -95,6 +103,7 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
                       color: "white",
                       backdropFilter: "blur(5px)",
                       maxWidth: "fit",
+                      boxShadow: "1px 5px 5px rgba(0,0,0,0.7)",
                     }}
                   />
                 ))}
@@ -106,7 +115,7 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
                   sx={{
                     color: "white",
                     fontWeight: 700,
-                    textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                    textShadow: "0 0px 1px rgba(0,0,0,1)",
                     lineHeight: 1.2,
                     mb: 0.5,
                   }}
