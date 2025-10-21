@@ -77,32 +77,44 @@ export default function BidCard({ bid, index }: BidCardProps) {
   };
 
   return (
-    <Box component={"article"} sx={{ position: "relative" }}>
+    <Box
+      component={"li"}
+      sx={{
+        position: "relative",
+        listStyle: "none",
+      }}
+    >
       <ListingCard listing={listing} index={index} />
-
-      <Chip
-        icon={<AttachMoney />}
-        label={`Your Bid: ${bid.amount}`}
-        color="secondary"
-        sx={{
-          position: "absolute",
-          bottom: 66,
-          left: 10,
-          zIndex: 10,
-          fontSize: "0.8rem",
-          fontWeight: "bold",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
-        }}
-      />
-
       <Box
         sx={{
-          position: "absolute",
-          top: 10,
-          right: 10,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 2,
+          backgroundColor: "background.paper",
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: "0 0 16px 16px",
+          mt: "-10px",
+          pt: "24px",
           zIndex: 10,
         }}
       >
+        <Chip
+          icon={<AttachMoney />}
+          label={`Your Bid: ${bid.amount}`}
+          color="secondary"
+          sx={{
+            position: "absolute",
+            top: 16,
+            left: 10,
+            zIndex: 5,
+            fontSize: "0.8rem",
+            fontWeight: "bold",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+          }}
+        />
+
         {getStatusButton()}
       </Box>
     </Box>

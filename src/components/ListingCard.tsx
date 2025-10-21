@@ -23,7 +23,7 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
     : "Invalid date";
   const bidCount = listing._count?.bids;
   return (
-    <Box sx={{ position: "relative", borderRadius: 4 }}>
+    <Box component={"article"} sx={{ position: "relative", borderRadius: 4 }}>
       <Box
         sx={{
           opacity: imageLoaded ? 0 : 1,
@@ -34,7 +34,6 @@ export default function ListingCard({ listing, index }: ListingCardProps) {
         <GhostListingCard />
       </Box>
 
-      {/* Real content - fades in when image loads */}
       <Box
         sx={{
           position: "absolute",

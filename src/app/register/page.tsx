@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container, Box, Paper, Typography, TextField, Button, Alert, CircularProgress, useTheme } from "@mui/material";
 import { registerUser, RegisterCredentials } from "@/lib/api";
@@ -13,12 +13,17 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 export default function RegisterPage() {
   const theme = useTheme();
   const router = useRouter();
-  const { login } = useAuth();
+  const { userProfile, login } = useAuth();
   const [formData, setFormData] = useState<RegisterCredentials>({ name: "", email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useDocumentTitle("Register - Midnight Auction House");
+
+  useEffect(() => {
+    if (userProfile === undefined) return;
+    if (userProfile) router.push("/profile");
+  }, [userProfile, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

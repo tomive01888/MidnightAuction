@@ -34,17 +34,25 @@ export default function EditListingPage() {
     updateListingMutation.mutate(data);
   };
 
+  // Authentication check
   useEffect(() => {
     if (!isAuthLoading && !userProfile) {
       router.push("/login");
     }
+  }, [isAuthLoading, userProfile, router]);
 
-    if (listing && userProfile && listing.seller?.name !== userProfile.name) {
-      router.push(`/listings/${id}`);
+  // Authorization check - separate effect with proper dependencies
+  useEffect(() => {
+    // Only check authorization after both listing and user profile are loaded
+    if (!isFetching && !isAuthLoading && listing && userProfile) {
+      if (listing.seller?.name !== userProfile.name) {
+        router.push(`/listings/${id}`);
+      }
     }
-  }, [isAuthLoading, userProfile, listing, router, id]);
+  }, [listing, userProfile, isFetching, isAuthLoading, router, id]);
 
-  if (isFetching || isAuthLoading || !listing) {
+  // Show loading state while checking auth or fetching listing
+  if (isFetching || isAuthLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
         <CircularProgress />
@@ -52,10 +60,20 @@ export default function EditListingPage() {
     );
   }
 
+  // Show error if fetch failed
   if (fetchError) {
     return (
       <Container sx={{ py: 5 }}>
         <Alert severity="error">{fetchError}</Alert>
+      </Container>
+    );
+  }
+
+  // Show error if no listing data (shouldn't happen, but safety check)
+  if (!listing) {
+    return (
+      <Container sx={{ py: 5 }}>
+        <Alert severity="error">Listing not found</Alert>
       </Container>
     );
   }

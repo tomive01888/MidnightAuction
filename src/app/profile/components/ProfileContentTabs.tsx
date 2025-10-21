@@ -8,7 +8,7 @@ import MyWinsTab from "./tabs/MyWinsTab";
 
 interface ProfileContentTabsProps {
   userName: string;
-  accessToken: string | null;
+  accessToken: string;
 }
 
 export default function ProfileContentTabs({ userName, accessToken }: ProfileContentTabsProps) {
@@ -19,25 +19,28 @@ export default function ProfileContentTabs({ userName, accessToken }: ProfileCon
   };
 
   return (
-    <>
-      <Box sx={{ mb: 4 }}>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 4 }}>
         <Tabs value={tabIndex} onChange={handleTabChange} centered>
           <Tab label="My Listings" sx={{ fontSize: "24px" }} />
           <Tab label="My Bids" sx={{ fontSize: "24px" }} />
           <Tab label="My Wins" sx={{ fontSize: "24px" }} />
         </Tabs>
       </Box>
-      {!accessToken ? (
-        <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          {tabIndex === 0 && <MyListingsTab userName={userName} accessToken={accessToken} />}
-          {tabIndex === 1 && <MyBidsTab userName={userName} accessToken={accessToken} />}
-          {tabIndex === 2 && <MyWinsTab userName={userName} accessToken={accessToken} />}
-        </>
-      )}
-    </>
+
+      <Box sx={{ minHeight: "500px" }}>
+        {!accessToken ? (
+          <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            {tabIndex === 0 && <MyListingsTab userName={userName} accessToken={accessToken} />}
+            {tabIndex === 1 && <MyBidsTab userName={userName} accessToken={accessToken} />}
+            {tabIndex === 2 && <MyWinsTab userName={userName} accessToken={accessToken} />}
+          </>
+        )}
+      </Box>
+    </Box>
   );
 }

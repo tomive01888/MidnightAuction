@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { Box, CircularProgress, Typography, Switch, FormControlLabel } from "@mui/material";
-import { Masonry } from "@mui/lab";
+import { Box, Typography, Switch, FormControlLabel, Grid } from "@mui/material";
 import AuctionApi from "@/lib/api";
 import ManagedListingCard from "../ManagedListingCard";
 import { useApi } from "@/hooks/useApi";
+import SkeletonGrid from "@/components/SkeletonGrid";
+import { Listing } from "@/lib/types";
 
 interface MyListingsTabProps {
   userName: string;
@@ -28,32 +29,33 @@ export default function MyListingsTab({ userName, accessToken }: MyListingsTabPr
     return listings.filter((listing) => new Date(listing.endsAt) > new Date());
   }, [listings, showEnded]);
 
-  if (isLoading)
+  if (isLoading && !listings) {
+    return <SkeletonGrid count={filteredListings.length} />;
+  }
+
+  if (!isLoading && filteredListings.length === 0) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
-        <CircularProgress />
-      </Box>
+      <Typography align="center" sx={{ p: 5, color: "text.secondary" }}>
+        {showEnded ? "You have no listing history." : "You have no active listings."}
+      </Typography>
     );
+  }
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2, width: "100%" }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <FormControlLabel
           control={<Switch checked={showEnded} onChange={(e) => setShowEnded(e.target.checked)} />}
           label="Show Ended Listings"
         />
       </Box>
-      {filteredListings.length === 0 ? (
-        <Typography align="center" sx={{ p: 5, color: "text.secondary" }}>
-          No listings to display.
-        </Typography>
-      ) : (
-        <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2}>
-          {filteredListings.map((listing, index) => (
-            <ManagedListingCard listing={listing} index={index} key={listing.id} onDeleteSuccess={refetch} />
-          ))}
-        </Masonry>
-      )}
+      <Grid container spacing={3}>
+        {filteredListings.map((listing: Listing, index: number) => (
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={listing.id}>
+            <ManagedListingCard listing={listing} index={index} onDeleteSuccess={refetch} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 }

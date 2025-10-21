@@ -57,11 +57,22 @@ export default function ManagedListingCard({ listing, index, onDeleteSuccess }: 
     deleteMutation.mutate(listing.id);
   };
 
-  const hasLinstingEnded = listing.endsAt ? new Date(listing.endsAt) < new Date() : false;
+  const hasListingEnded = listing.endsAt ? new Date(listing.endsAt) < new Date() : false;
 
   return (
     <>
-      <Box component={"article"} sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap", width: "100%" }}>
+      <Box
+        component={"li"}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          width: "100%",
+          opacity: hasListingEnded ? 0.6 : 1,
+          position: "relative",
+          listStyle: "none",
+        }}
+      >
         <ListingCard listing={listing} index={index} />
 
         <Box
@@ -74,12 +85,12 @@ export default function ManagedListingCard({ listing, index, onDeleteSuccess }: 
             border: "1px solid",
             borderColor: "divider",
             borderRadius: "0 0 16px 16px",
-            mt: "-16px",
+            mt: "-10px",
             pt: "24px",
             zIndex: 2,
           }}
         >
-          {!hasLinstingEnded && (
+          {!hasListingEnded && (
             <>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 Manage Listing

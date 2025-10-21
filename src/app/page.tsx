@@ -21,7 +21,7 @@ export default function Home() {
       try {
         setIsLoading(true);
         const api = new AuctionApi();
-        const response = await api.getListings(currentPage, 20, sortBy, sortOrder);
+        const response = await api.getListings(currentPage, 15, sortBy, sortOrder);
         setListings(response.data);
         if (response.meta) {
           setTotalPages(response.meta.pageCount);
@@ -195,20 +195,20 @@ export default function Home() {
         </Box>
 
         <Box
+          component={"ul"}
           display="grid"
           gap={3}
           gridTemplateColumns={{
             xs: "repeat(1, 1fr)",
             sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
+            lg: "repeat(3, 1fr)",
           }}
         >
           {isLoading ? (
-            Array.from({ length: 12 }).map((_, index) => <GhostListingCard key={index} />)
+            Array.from({ length: 15 }).map((_, index) => <GhostListingCard key={index} />)
           ) : listings.length > 0 ? (
             listings.map((listing, index) => (
-              <Box component={"article"} key={listing.id}>
+              <Box component={"li"} key={listing.id} sx={{ listStyle: "none" }}>
                 <ListingCard listing={listing} index={index} />
               </Box>
             ))

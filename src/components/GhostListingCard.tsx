@@ -36,6 +36,7 @@ export default function GhostListingCard() {
 
   return (
     <Box
+      component={"li"}
       sx={{
         width: "100%",
         aspectRatio: "3/4",
